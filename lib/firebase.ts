@@ -14,7 +14,6 @@ const firebaseConfig = {
 
 // Singleton pattern: Ensure we only initialize once
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-
 export const db = getFirestore(app);     // For Products/Orders
 export const auth = getAuth(app);         // For Login
 export const storage = getStorage(app);   // For Images
