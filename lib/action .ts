@@ -1,17 +1,16 @@
 import { db } from "./firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { Product } from "../types";
+import { LamBeeProduct } from "../types/product";
 
-export const uploadProduct = async (productData: Omit<Product, 'createdAt'>) => {
+export const createProduct = async (data: Omit<LamBeeProduct, 'id' | 'createdAt'>) => {
   try {
     const docRef = await addDoc(collection(db, "products"), {
-      ...productData,
+      ...data,
       createdAt: serverTimestamp(),
     });
-    console.log("Product added with ID: ", docRef.id);
     return { success: true, id: docRef.id };
   } catch (error) {
-    console.error("Error adding product: ", error);
+    console.error("Firebase Upload Error:", error);
     return { success: false, error };
   }
 };
